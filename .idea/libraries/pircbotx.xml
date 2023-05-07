@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="pircbotx" type="repository">
+    <properties maven-id="org.pircbotx:pircbotx:2.1">
+      <exclude>
+        <dependency maven-id="org.slf4j:slf4j-api" />
+      </exclude>
+    </properties>
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/pircbotx/pircbotx/2.1/pircbotx-2.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.10/commons-codec-1.10.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/19.0/guava-19.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
