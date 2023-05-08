@@ -9,6 +9,8 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.net.ssl.SSLSocketFactory;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -49,23 +51,25 @@ public class OnichanBot extends ListenerAdapter {
 
                 try {
                     translatedText = translateText(text, targetLanguage);
-                } catch (IOException e) {
+                } catch (IOException | URISyntaxException e) {
                     e.printStackTrace();
                 }
+
 
                 event.respond(translatedText);
             }
         }
     }
 
-    private String translateText(String text, String targetLanguage) throws IOException {
+    private String translateText(String text, String targetLanguage) throws IOException, URISyntaxException {
         String apiKey = "***REMOVED***";
         String apiUrl = "https://api-free.deepl.com/v2/translate";
         String charset = "UTF-8";
         String encodedText = java.net.URLEncoder.encode(text, charset);
         String requestUrl = apiUrl + "?auth_key=" + apiKey + "&target_lang=" + targetLanguage + "&text=" + encodedText;
 
-        URL url = new URL(requestUrl);
+        URI uri = new URI(requestUrl);
+        URL url = uri.toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Accept-Charset", charset);
