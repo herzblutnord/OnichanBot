@@ -6,7 +6,7 @@
 
     <groupId>org.ircbot</groupId>
     <artifactId>OnichanBot</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
@@ -47,11 +47,18 @@
             </exclusions>
         </dependency>
 
-                <dependency>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                    <version>1.15</version>
-                </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.11.0</version>
+        </dependency>
+
 
     </dependencies>
 

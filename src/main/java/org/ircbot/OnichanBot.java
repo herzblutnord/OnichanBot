@@ -2,6 +2,7 @@ package org.ircbot;
 
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
+import okhttp3.*;
 
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -58,6 +59,18 @@ public class OnichanBot extends ListenerAdapter {
 
                 event.respond(translatedText);
             }
+        } else if (event.getMessage().startsWith(".ud")) {
+            String[] parts = event.getMessage().split(" ", 2);
+            if (parts.length == 2) {
+                String term = parts[1];
+                String definition = "";
+                try {
+                    definition = searchUrbanDictionary(term);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                event.respond(definition);
+            }
         }
     }
 
@@ -94,5 +107,31 @@ public class OnichanBot extends ListenerAdapter {
             return "Error: " + responseCode;
         }
     }
+
+    private String searchUrbanDictionary(String term) throws IOException {
+        String apiKey = "***REMOVED***";
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + term)
+                .get()
+                .addHeader("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", apiKey)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.body() != null) {
+                String jsonData = response.body().string();
+                JsonElement jsonElement = JsonParser.parseString(jsonData);
+                if (jsonElement.getAsJsonObject().get("list").getAsJsonArray().size() > 0) {
+                    return jsonElement.getAsJsonObject().get("list").getAsJsonArray().get(0).getAsJsonObject().get("definition").getAsString();
+                } else {
+                    return "No definition found for " + term;
+                }
+            } else {
+                return "Error: Response body is null";
+            }
+        }
+    }
+
 
 }
