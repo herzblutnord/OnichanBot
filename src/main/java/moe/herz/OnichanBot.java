@@ -9,6 +9,7 @@ import java.util.Set;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -102,6 +103,8 @@ public class OnichanBot extends ListenerAdapter {
             handleYoutubeCommand(event, message);
         } else if (message.startsWith(".ud ")) {
             handleUrbanDictionaryCommand(event, message);
+        } else if (message.startsWith(".deepl ")) {
+            handleDeepLCommand(event, message);
         } else if (message.startsWith("!reload")) {
             if (nick != null && nick.equals(BOT_ADMIN)) {
                 loadIgnoredUrls("ignored_urls.txt");
@@ -113,6 +116,38 @@ public class OnichanBot extends ListenerAdapter {
             handleUrlFetching(event, matcher);
         }
     }
+
+    private void handleDeepLCommand(GenericMessageEvent event, String message) {
+        // Split the command message by spaces. Expecting format: .deepl [targetLang] [text]
+        String[] parts = message.split(" ", 3);
+
+        // Check if the command has the minimum required parts (command, language, text)
+        if (parts.length < 3) {
+            event.respond("Usage: .deepl [targetLang] [text to translate]");
+            return;
+        }
+
+        String targetLanguage = parts[1].toUpperCase(); // Ensure the language code is in upper case
+        String textToTranslate = parts[2];
+
+        try {
+            // Assuming you have a DeepLTranslator instance accessible here, or create one
+            DeepLService translator = new DeepLService(config);
+            String translatedText = translator.translateText(textToTranslate, targetLanguage);
+
+            // Respond with the translated text
+            event.respond(translatedText);
+        } catch (IOException | URISyntaxException e) {
+            // Log the exception or respond with an error message
+            logger.error("Error during translation", e);
+            event.respond("Failed to translate text due to an error.");
+        } catch (Exception e) {
+            // Catch all for any other unexpected errors
+            logger.error("Unexpected error during translation", e);
+            event.respond("An unexpected error occurred.");
+        }
+    }
+
 
     private void handleNowPlayingCommand(GenericMessageEvent event, String message) {
         String ircUsername = event.getUser().getNick();

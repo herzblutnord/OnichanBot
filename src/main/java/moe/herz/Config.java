@@ -71,6 +71,10 @@ public class Config {
         return properties.getProperty("ud.apiKey");
     }
 
+    public String getdeeplapiKey() {
+        return properties.getProperty("deepl.apiKey");
+    }
+
     public String getBotAdmin() {
         return properties.getProperty("bot.admin");
     }

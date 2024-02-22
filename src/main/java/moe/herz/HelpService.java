@@ -22,6 +22,10 @@ public class HelpService {
                 ".ud <search term>",
                 "Searches Urban Dictionary and provides a definition for the specified term."
         );
+        commands.put(
+                ".deepl <language code> <text to translate>",
+                "Translates text via deepl api. Example language codes: en,de,fi,jpn..."
+        );
     }
 
     public void sendHelp(User user, PircBotX bot) {
