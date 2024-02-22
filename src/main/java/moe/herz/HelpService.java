@@ -19,16 +19,8 @@ public class HelpService {
                 "Displays the most recent song played by the specified Last.fm username. You only need to provide your Last.fm username once."
         );
         commands.put(
-                ".in <duration (w/d/h/m/s)> <message>",
-                "Sets a reminder for you. You'll be notified with the provided message after the specified duration. Duration format: Number followed by 'w' for weeks, 'd' for days, 'h' for hours, 'm' for minutes, or 's' for seconds (e.g., '10m' for 10 minutes)."
-        );
-        commands.put(
                 ".ud <search term>",
                 "Searches Urban Dictionary and provides a definition for the specified term."
-        );
-        commands.put(
-                ".tell <username> <message>",
-                "Saves a message for a user. The user will receive the message the next time they are active."
         );
     }
 
