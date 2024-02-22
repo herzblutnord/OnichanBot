@@ -70,9 +70,19 @@ To get OnichanBot up and running, a `config3.properties` file is required in the
 
 By following these steps and correctly setting up your `config3.properties` file, OnichanBot will be configured to connect to the desired IRC server, join the specified channel, and utilize the defined services through their respective APIs.
 
-## Database Structure
+## Database Setup
 
-- coming soon
+### Creating the `lastfmnames` Table
+
+To store IRC usernames and their corresponding Last.fm usernames, you need to create a table in your PostgreSQL database. Use the SQL statement below to create the `lastfmnames` table:
+
+```sql
+CREATE TABLE public.lastfmnames (
+    id serial PRIMARY KEY,
+    username character varying(50) NOT NULL UNIQUE,
+    lastfm_username character varying(50)
+);
+```
 
 ## Acknowledgments
 
