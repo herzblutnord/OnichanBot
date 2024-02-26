@@ -137,7 +137,7 @@ public class OnichanBot extends ListenerAdapter {
 
             // Respond with the translated text
             event.respond(translatedText);
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             // Log the exception or respond with an error message
             logger.error("Error during translation", e);
             event.respond("Failed to translate text due to an error.");
