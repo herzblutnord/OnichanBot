@@ -9,7 +9,6 @@ import java.util.Set;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import org.pircbotx.PircBotX;
 import org.pircbotx.hooks.ListenerAdapter;
@@ -207,8 +206,19 @@ public class OnichanBot extends ListenerAdapter {
     }
 
     private void handleUrlFetching(GenericMessageEvent event, Matcher matcher) {
+        // Check if URL fetching is enabled
+        if (!config.isUrlFetchingEnabled()) {
+            return; // Exit if URL fetching is disabled
+        }
+
         if (matcher.find()) {
             String url = matcher.group(1);
+
+            // Additional checks for YouTube link fetching
+            boolean isYoutubeUrl = url.contains("youtube.com") || url.contains("youtu.be");
+            if (isYoutubeUrl && !config.isYoutubeLinkFetchingEnabled()) {
+                return; // Exit if YouTube link fetching is disabled but still allow .yt command to work
+            }
 
             boolean shouldIgnore = false;
             for (String ignoredUrl : ignoredUrls) {

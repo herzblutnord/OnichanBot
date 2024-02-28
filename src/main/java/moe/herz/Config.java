@@ -79,6 +79,15 @@ public class Config {
         return properties.getProperty("bot.admin");
     }
 
+    public boolean isUrlFetchingEnabled() {
+        return Boolean.parseBoolean(properties.getProperty("url.fetching.enabled", "true"));
+    }
+
+    public boolean isYoutubeLinkFetchingEnabled() {
+        return Boolean.parseBoolean(properties.getProperty("youtube.link.fetching.enabled", "true"));
+    }
+
+
     public Connection getDbConnection() {
         return db;
     }
